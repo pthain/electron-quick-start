@@ -14,7 +14,13 @@
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>.
 
-    <button type='button' id='new-window'>Click to Open a New Window</button>
+    <h3>Below are sample windows created using the electron API.<h3>
+    <br>
+    <button type='button' id='new-window'>Click to Open a New Window!</button>
+    <p>
+      <button type='button' id='manage-window'>This window responds to move and size events!</button>
+      <p id='manage-window-reply'>Waiting for reply...<p/>
+    </p>
     <script>
       // You can also require other files to run in this process
       console.log("Attempt to load renderer...")
