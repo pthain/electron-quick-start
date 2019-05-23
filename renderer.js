@@ -11,6 +11,8 @@ let win
 //Get a button id'd by 'new-window' found in index.html
 const newWindowBtn = document.getElementById('new-window')
 const manageWindowBtn = document.getElementById('manage-window')
+const blurWindowBtn = document.getElementById('blur-window')
+const focusBtn = document.getElementById('focus-on-modal')
 
 newWindowBtn.addEventListener('click', (event) => {
   console.log("creating new window")
@@ -45,4 +47,41 @@ manageWindowBtn.addEventListener('click', (event) => {
     manageWindowReply.innerText = message
   }
 
+})
+
+blurWindowBtn.addEventListener('click', (event) => {
+  console.log("Create a window for blurring/focusing")
+  const modalPath = path.join('file://',__dirname,'html_src/modal-toggle-visibility.html')
+  console.log()
+  win = new BrowserWindow({width: 600, height: 400})
+
+  win.on('focus', hideFocusBtn)
+  win.on('blur', showFocusBtn)
+  win.on('close', () => {
+    hideFocusBtn()
+    win = null
+  })
+
+  function hideFocusBtn() {
+    console.log("Attempt to hide the focus button")
+    focusBtn.classList.add('disappear')
+    focusBtn.classList.remove('smooth-appear')
+    focusBtn.removeEventListener('click', clickHandler)
+  }
+
+  function showFocusBtn(btn) {
+    console.log("Attempt to show the focus button")
+    if (!win) return
+    focusBtn.classList.add('smooth-appear')
+    focusBtn.classList.remove('disappear')
+    focusBtn.addEventListener('click', clickHandler)
+
+  }
+
+  function clickHandler () {
+    win.focus()
+  }
+
+  win.loadURL(modalPath)
+  win.show()
 })

@@ -6,6 +6,7 @@
     <script>
       console.log("Head of index.html")
     </script>
+    <link rel="stylesheet" href="window.css">
   </head>
   <body>
     <h1>Hello World!</h1>
@@ -20,6 +21,10 @@
     <p>
       <button type='button' id='manage-window'>This window responds to move and size events!</button>
       <p id='manage-window-reply'>Waiting for reply...<p/>
+    </p>
+    <p>
+      <button type='button' id='blur-window'>Create a window that can blur out of focus</button>
+      <button type='button' class='disappear' id='focus-on-modal'>Focus on the modal window</button>
     </p>
     <script>
       // You can also require other files to run in this process
