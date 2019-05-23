@@ -31,7 +31,11 @@ manageWindowBtn.addEventListener('click', (event) => {
 
   win.on('resize', updateReply)
   win.on('move', updateReply)
-  win.on('close', () => {win = null})
+  win.on('close', () => {
+    const manageWindowReply = document.getElementById('manage-window-reply')
+    manageWindowReply.innerText = 'Window has been closed.'
+    win = null
+  })
   win.loadURL(modalPath)
   win.show()
 
