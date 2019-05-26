@@ -102,7 +102,7 @@ crashBtn.addEventListener('click', (event) => {
   const modalPath = path.join('file://', __dirname,'html_src/process-crash.html')
   console.log("Path: ",modalPath)
   let win = new BrowserWindow({width: 400, height: 320})
-  win.on('crashed', () => {
+  win.webContents.on('crashed', () => {
     const options = {
       type: 'info',
       title: 'Renderer Process Crashed',
