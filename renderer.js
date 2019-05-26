@@ -6,19 +6,19 @@ console.log("This is the renderer process!")
 
 const {BrowserWindow} = require('electron').remote;
 const path = require('path')
-let win
 
 //Get a button id'd by 'new-window' found in index.html
 const newWindowBtn = document.getElementById('new-window')
 const manageWindowBtn = document.getElementById('manage-window')
 const blurWindowBtn = document.getElementById('blur-window')
 const focusBtn = document.getElementById('focus-on-modal')
+const framelessBtn = document.getElementById('frameless-window')
 
 newWindowBtn.addEventListener('click', (event) => {
   console.log("creating new window")
   const modalPath = path.join('file://', __dirname,'html_src/modal.html')
   console.log("Path: ",modalPath)
-  win = new BrowserWindow({width: 400, height: 320})
+  let win = new BrowserWindow({width: 400, height: 320})
 
   win.on('close', () => {win = null})
   win.loadURL(modalPath)
@@ -29,7 +29,7 @@ manageWindowBtn.addEventListener('click', (event) => {
   console.log("creating manageable window")
   const modalPath = path.join('file://', __dirname,'html_src/manage-modal.html')
   console.log("Path: ",modalPath)
-  win = new BrowserWindow({width: 400, height: 320})
+  let win = new BrowserWindow({width: 400, height: 320})
 
   win.on('resize', updateReply)
   win.on('move', updateReply)
@@ -52,8 +52,7 @@ manageWindowBtn.addEventListener('click', (event) => {
 blurWindowBtn.addEventListener('click', (event) => {
   console.log("Create a window for blurring/focusing")
   const modalPath = path.join('file://',__dirname,'html_src/modal-toggle-visibility.html')
-  console.log()
-  win = new BrowserWindow({width: 600, height: 400})
+  let win = new BrowserWindow({width: 600, height: 400})
 
   win.on('focus', hideFocusBtn)
   win.on('blur', showFocusBtn)
@@ -82,6 +81,17 @@ blurWindowBtn.addEventListener('click', (event) => {
     win.focus()
   }
 
+  win.loadURL(modalPath)
+  win.show()
+})
+
+
+framelessBtn.addEventListener('click', (event) => {
+  console.log("Creating a framless window...")
+  const modalPath = path.join('file://', __dirname,'html_src/modal.html')
+  let win = new BrowserWindow({frame: false, width: 600, height: 600 })
+
+  win.on('close', () => {win = null})
   win.loadURL(modalPath)
   win.show()
 })
