@@ -4,7 +4,7 @@
 
 console.log("This is the renderer process!")
 
-const {BrowserWindow} = require('electron').remote;
+const {BrowserWindow, dialog} = require('electron').remote;
 const path = require('path')
 
 //Get a button id'd by 'new-window' found in index.html
@@ -13,6 +13,7 @@ const manageWindowBtn = document.getElementById('manage-window')
 const blurWindowBtn = document.getElementById('blur-window')
 const focusBtn = document.getElementById('focus-on-modal')
 const framelessBtn = document.getElementById('frameless-window')
+const crashBtn = document.getElementById('crash-window')
 
 newWindowBtn.addEventListener('click', (event) => {
   console.log("creating new window")
@@ -90,6 +91,31 @@ framelessBtn.addEventListener('click', (event) => {
   console.log("Creating a framless window...")
   const modalPath = path.join('file://', __dirname,'html_src/modal.html')
   let win = new BrowserWindow({frame: false, width: 600, height: 600 })
+
+  win.on('close', () => {win = null})
+  win.loadURL(modalPath)
+  win.show()
+})
+
+crashBtn.addEventListener('click', (event) => {
+  console.log("crash testing...")
+  const modalPath = path.join('file://', __dirname,'html_src/process-crash.html')
+  console.log("Path: ",modalPath)
+  let win = new BrowserWindow({width: 400, height: 320})
+  win.on('crashed', () => {
+    const options = {
+      type: 'info',
+      title: 'Renderer Process Crashed',
+      message: 'This process has crashed!',
+      buttons: ['Reload', 'Send Message', 'Close']
+    }
+
+    dialog.showMessageBox(options, (index) => {
+      if (index === 0) win.reload()
+      else if (index === 1) console.log('Message sent to console!')
+      else win.close
+    })
+  })
 
   win.on('close', () => {win = null})
   win.loadURL(modalPath)
