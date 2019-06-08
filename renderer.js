@@ -43,6 +43,8 @@ menuTestBtn.addEventListener('click', () => {
       accelerator: 'CmdOrCtrl+A',
       role: 'selectall'
     }]
+  } , {
+    role: 'windowMenu'
   }]
   const menu = Menu.buildFromTemplate(template)
   //Menu.setApplicationMenu(menu) <-- APPLIES TEMPLATE TO ALL WINDOWS IN APPLICATION!
